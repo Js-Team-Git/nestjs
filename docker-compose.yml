@@ -22,7 +22,7 @@ services:
     depends_on:
       - db
     ports:
-      - 3000:3000
+      - 1403:1403
     environment:
       NODE_ENV: production
       DB_HOST: db
