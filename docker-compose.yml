@@ -1,39 +1,21 @@
-version: '3.8'
-services:
-  db:
-    image: mysql:8.0
-    cap_add:
-      - SYS_NICE
-    restart: always
-    environment:
-      - MYSQL_DATABASE=users
-      - MYSQL_ROOT_PASSWORD=root123
-    ports:
-      - '3306:3306'
-    volumes:
-      - db:/var/lib/mysql
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
-  api:
-    container_name: users-api
-    build:
-      context: ./
-      target: production
-    image: users-api
-    depends_on:
-      - db
-    ports:
-      - 1403:1403
-    environment:
-      NODE_ENV: production
-      DB_HOST: db
-      DB_PORT: 3306
-      DB_USER: root
-      DB_PASSWORD: root123
-      DB_NAME: users
-    links:
-      - db
-    volumes:
-      - ./:/src
-volumes:
-  db:
-    driver: local
+  version: '3.8'
+    services:
+      backend:
+        build: .
+        ports:
+         - 8000:3000
+        volumes: 
+         - .:/app
+        depends_on:
+         - db
+
+     db:
+      image: mysql:8
+      restart: always
+      environment:
+        MYSQL_DATABASE: admin
+        MYSQL_USER: root
+        MYSQL_PASSWORD: root123
+        MYSQL_ROOT_PASSWORD: root123
+        ports:
+         - 33066:4205
